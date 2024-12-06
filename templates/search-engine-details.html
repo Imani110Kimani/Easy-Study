@@ -1,0 +1,96 @@
+{% extends 'starter-page.html' %}
+{% load static %}
+
+{% block body %}
+<section id="seo-course" class="seo-course-page py-5">
+  <div class="container">
+    <!-- Page Title -->
+    <div class="row d-flex justify-content-center text-center">
+      <div class="col-lg-8" data-aos="fade">
+        <div class="title-section bg-success text-white p-4 rounded shadow">
+          <h2 class="mb-4">Search Engine Optimization (SEO) Course</h2>
+          <p class="mb-0">
+            Welcome to our SEO course! In this comprehensive program, you'll learn how to optimize websites to rank higher on search engines like Google. Whether you're a business owner, marketer, or aspiring SEO expert, this course provides the skills needed to boost your website's visibility and drive more organic traffic. You’ll dive deep into on-page and off-page SEO strategies, keyword research, content creation, and much more.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Course Details -->
+    <div class="row mt-5">
+      <div class="col-lg-8 mx-auto">
+        <!-- Accordion Section -->
+        <div class="accordion" id="seoLearnAccordion" data-aos="fade-up">
+          <h3 class="mb-3">What You'll Learn:</h3>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingSEOOne">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSEOOne" aria-expanded="true" aria-controls="collapseSEOOne">
+                SEO Fundamentals
+              </button>
+            </h2>
+            <div id="collapseSEOOne" class="accordion-collapse collapse show" aria-labelledby="headingSEOOne" data-bs-parent="#seoLearnAccordion">
+              <div class="accordion-body">
+                <ul class="list-unstyled">
+                  <li>✔️ Introduction to SEO and search engine algorithms</li>
+                  <li>✔️ The importance of keywords and search intent</li>
+                  <li>✔️ On-page vs. off-page SEO strategies</li>
+                  <li>✔️ Understanding SEO ranking factors</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingSEOTwo">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSEOTwo" aria-expanded="false" aria-controls="collapseSEOTwo">
+                Advanced SEO Techniques
+              </button>
+            </h2>
+            <div id="collapseSEOTwo" class="accordion-collapse collapse" aria-labelledby="headingSEOTwo" data-bs-parent="#seoLearnAccordion">
+              <div class="accordion-body">
+                <ul class="list-unstyled">
+                  <li>✔️ Advanced keyword research and tools</li>
+                  <li>✔️ Content optimization for SEO</li>
+                  <li>✔️ Link building strategies and techniques</li>
+                  <li>✔️ Technical SEO and site audits</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingSEOThree">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSEOThree" aria-expanded="false" aria-controls="collapseSEOThree">
+                SEO Analytics and Reporting
+              </button>
+            </h2>
+            <div id="collapseSEOThree" class="accordion-collapse collapse" aria-labelledby="headingSEOThree" data-bs-parent="#seoLearnAccordion">
+              <div class="accordion-body">
+                <ul class="list-unstyled">
+                  <li>✔️ How to use Google Analytics for SEO</li>
+                  <li>✔️ Setting up and interpreting SEO reports</li>
+                  <li>✔️ Measuring SEO success and ROI</li>
+                  <li>✔️ Tools for tracking and improving rankings</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Who Should Enroll -->
+        <div class="mt-5" data-aos="fade-up">
+          <h3 class="mb-3">Who Should Enroll:</h3>
+          <p>
+            This course is perfect for marketers, business owners, bloggers, content creators, and anyone who wants to improve their website's search engine rankings. No prior SEO knowledge is required, just a passion to learn and grow.
+          </p>
+        </div>
+
+        <!-- Call-to-Action Buttons -->
+        <div class="text-center mt-5" data-aos="fade-up">
+          <a href="{% url 'pay' %}" class="btn btn-success btn-lg me-3">Enroll Now</a>
+          <a href="#" class="btn btn-outline-success btn-lg">Explore Resources</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

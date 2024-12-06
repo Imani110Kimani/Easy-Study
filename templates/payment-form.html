@@ -1,0 +1,63 @@
+{% extends 'starter-page.html' %}
+{% load static %}
+{% block body %}
+
+<div class="container mt-5">
+    <h2>Course Payment</h2>
+
+    <!-- Course Selection Section -->
+    <div class="mb-3">
+        <label for="courseSelect" class="form-label">Choose a Course</label>
+        <select class="form-select" id="courseSelect">
+            <option value="" disabled selected>Select a Course</option>
+            <option value="webdev" data-amount="5000" data-name="Web Development" data-description="Learn how to build websites from scratch.">Web Development - Ksh 5000</option>
+            <option value="seo" data-amount="4000" data-name="SEO" data-description="Master search engine optimization techniques.">SEO - Ksh 4000</option>
+            <option value="copywriting" data-amount="3000" data-name="Copywriting" data-description="Become a skilled copywriter and create compelling content.">Copywriting - Ksh 3000</option>
+        </select>
+    </div>
+
+    <!-- Course Details -->
+    <div id="courseDetails" class="mb-3">
+        <h4>Course Details</h4>
+        <p id="courseName">Please select a course to view details.</p>
+        <p id="courseDescription"></p>
+        <p id="coursePrice"></p>
+    </div>
+
+    <!-- Payment Form -->
+    <form id="paymentForm">
+        <div class="mb-3">
+            <label for="amount" class="form-label">Amount (Ksh)</label>
+            <input type="text" class="form-control" id="amount" value="0" readonly>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Proceed to Mpesa</button>
+    </form>
+</div>
+
+<script>
+    // Function to update course details based on selection
+    document.getElementById('courseSelect').addEventListener('change', function() {
+        var selectedCourse = this.options[this.selectedIndex];
+        var courseName = selectedCourse.getAttribute('data-name');
+        var courseDescription = selectedCourse.getAttribute('data-description');
+        var courseAmount = selectedCourse.getAttribute('data-amount');
+
+        // Update the course details
+        document.getElementById('courseName').innerText = courseName;
+        document.getElementById('courseDescription').innerText = courseDescription;
+        document.getElementById('coursePrice').innerText = 'Price: Ksh ' + courseAmount;
+
+        // Set the amount in the payment form
+        document.getElementById('amount').value = courseAmount;
+    });
+
+    // Handle payment form submission
+    document.getElementById('paymentForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        // Here you can handle the M-Pesa payment logic
+        alert('Payment submitted for ' + document.getElementById('amount').value + ' Ksh.');
+    });
+</script>
+
+{% endblock %}

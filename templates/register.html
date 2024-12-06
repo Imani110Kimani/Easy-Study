@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Create Account</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}">
+    <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+</head>
+<body>
+<section class="h-100 bg-dark">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-md-6">
+                <div class="card card-registration">
+                    <div class="card-body p-4 text-black">
+                        <h3 class="mb-4 text-uppercase text-center">Create Account</h3>
+
+                   <form method="POST" action="" enctype="multipart/form-data">
+    {% csrf_token %}
+    <!-- Profile Picture -->
+    <div class="mb-4">
+        <label for="profilePic" class="form-label">Profile Picture</label>
+        <input type="file" id="profilePic" name="profilePic" class="form-control">
+    </div>
+
+    <!-- First Name -->
+    <div class="mb-4">
+        <label for="firstName" class="form-label">First Name</label>
+        <input type="text" id="firstName" name="firstName" class="form-control" placeholder="Enter your first name">
+    </div>
+
+    <!-- Last Name -->
+    <div class="mb-4">
+        <label for="lastName" class="form-label">Last Name</label>
+        <input type="text" id="lastName" name="lastName" class="form-control" placeholder="Enter your last name">
+    </div>
+
+    <!-- Email -->
+    <div class="mb-4">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email">
+    </div>
+
+    <!-- Password -->
+    <div class="mb-4">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" id="password" name="password" class="form-control" placeholder="Enter your password">
+    </div>
+
+    <!-- Buttons -->
+    <div class="d-flex justify-content-end">
+        <button type="reset" class="btn btn-light btn-lg">Reset</button>
+        <button type="submit" class="btn btn-warning btn-lg ms-2">Create Account</button>
+    </div>
+                       <div>
+                           <a href="{% url 'login' %}">Already have an account?</a>
+                       </div>
+
+</form>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

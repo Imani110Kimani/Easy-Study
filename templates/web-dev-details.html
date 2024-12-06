@@ -1,0 +1,62 @@
+{% extends 'starter-page.html' %}
+{% load static %}
+
+{% block body %}
+<section id="web-dev" class="web-dev-page py-5">
+  <div class="container">
+    <!-- Page Title -->
+    <div class="row d-flex justify-content-center text-center">
+      <div class="col-lg-8" data-aos="fade">
+        <div class="title-section bg-success text-white p-4 rounded shadow">
+          <h2 class="mb-4">Web Development Course</h2>
+          <p class="mb-0">
+            Welcome to our comprehensive Web Development course! Whether you're a beginner or looking to enhance your existing skills, this course is designed to equip you with the tools and knowledge to create stunning and functional websites. You’ll learn HTML, CSS, JavaScript, and popular frameworks like Bootstrap and React. Gain practical experience through hands-on projects and build a portfolio to showcase your skills.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Course Details -->
+    <div class="row mt-5">
+      <div class="col-lg-8 mx-auto">
+        <!-- Accordion Section -->
+        <div class="accordion" id="learnAccordion" data-aos="fade-up">
+          <h3 class="mb-3">What You'll Learn:</h3>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingOne">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                Key Skills Covered
+              </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#learnAccordion">
+              <div class="accordion-body">
+                <ul class="list-unstyled">
+                  <li>✅ Building responsive websites using HTML, CSS, and JavaScript</li>
+                  <li>✅ Understanding backend technologies and database integration</li>
+                  <li>✅ Mastering modern frameworks like React and Angular</li>
+                  <li>✅ Implementing SEO strategies and web performance optimization</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Who Should Enroll -->
+        <div class="mt-5" data-aos="fade-up">
+          <h3 class="mb-3">Who Should Enroll:</h3>
+          <p>
+            This course is perfect for aspiring web developers, freelancers, entrepreneurs, and anyone looking to dive into the world of web technologies.
+          </p>
+        </div>
+
+        <!-- Call-to-Action Buttons -->
+        <div class="text-center mt-5" data-aos="fade-up">
+          <a href="{% url 'pay' %}" class="btn btn-primary btn-lg me-3">Enroll Now</a>
+          <a href="#" class="btn btn-outline-secondary btn-lg">Explore Resources</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
