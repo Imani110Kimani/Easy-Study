@@ -24,6 +24,9 @@ urlpatterns = [
     path('delete_contact/<int:id>', views.delete_contact),
     path('edit_contact/<int:id>', views.edit_contact),
     path('update_contact/<int:id>', views.update_contact, name='update_contact'),
+    path('trainers/', views.trainers, name='trainers'),
+    path('upload_trainer/', views.upload_trainer, name='upload_trainer'),
+    path('show_image/', views.show_image, name='show_image'),
 
 
 

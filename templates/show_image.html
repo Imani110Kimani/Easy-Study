@@ -1,12 +1,12 @@
-{% extends 'starter-page.html' %}
-{% load static %}
-{% block body %}
+{% extends 'base.html' %}
+
+{% block content %}
 <section id="trainers" class="trainers">
     <div class="container" data-aos="fade-up">
 
         <div class="section-title">
             <h2>Trainers</h2>
-            <p>Our Professional Trainers</p>
+            <p>Meet Our Professional Trainers</p>
         </div>
 
         <div class="row" data-aos="zoom-in" data-aos-delay="100">
@@ -14,11 +14,18 @@
             {% for trainer in trainers %}
             <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
                 <div class="member">
+                    <!-- Image -->
                     <img src="{{ trainer.image.url }}" class="img-fluid" alt="{{ trainer.name }}">
+
                     <div class="member-content">
+                        <!-- Name and Role -->
                         <h4>{{ trainer.name }}</h4>
                         <span>{{ trainer.role }}</span>
+
+                        <!-- Description -->
                         <p>{{ trainer.description }}</p>
+
+                        <!-- Social Links -->
                         <div class="social">
                             {% if trainer.twitter %}
                             <a href="{{ trainer.twitter }}"><i class="bi bi-twitter"></i></a>
@@ -36,8 +43,6 @@
                     </div>
                 </div>
             </div>
-            {% empty %}
-            <p>No trainers available yet. Check back later!</p>
             {% endfor %}
 
         </div>
@@ -45,3 +50,4 @@
     </div>
 </section>
 {% endblock %}
+

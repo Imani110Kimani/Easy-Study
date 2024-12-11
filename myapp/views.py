@@ -1,8 +1,9 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from myapp.models import Students, Contact, Course
+from myapp.models import Students, Contact, Course, Trainer
 from django.http import JsonResponse
-from myapp.forms import ContactForm
+from myapp.forms import ContactForm, TrainerForm
+
 
 # Create your views here.
 
@@ -66,6 +67,25 @@ def index(request):
     else:
         # Render the login page for GET requests
         return render(request, 'login.html')
+
+def trainers(request):
+    trainers = Trainer.objects.all()
+    return render(request, 'trainers.html', {'trainers': trainers})
+
+def upload_trainer(request):
+    if request.method == 'POST':
+        form = TrainerForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('show_image')
+    else:
+        form = TrainerForm()
+    return render(request, 'trainer_upload.html', {'form': form})
+
+def show_image(request):
+    trainers = Trainer.objects.all()
+    return render(request, 'trainers.html', {'trainers': trainers})
+
 def about(request):
     return render(request, 'about.html')
 
