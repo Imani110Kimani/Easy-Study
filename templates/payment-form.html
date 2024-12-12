@@ -8,11 +8,13 @@
     <!-- Course Selection Section -->
     <div class="mb-3">
         <label for="courseSelect" class="form-label">Choose a Course</label>
-        <select class="form-select" id="courseSelect">
+        <select class="form-select" id="courseSelect" name="course_id">
             <option value="" disabled selected>Select a Course</option>
-            <option value="webdev" data-amount="5000" data-name="Web Development" data-description="Learn how to build websites from scratch.">Web Development - Ksh 5000</option>
-            <option value="seo" data-amount="4000" data-name="SEO" data-description="Master search engine optimization techniques.">SEO - Ksh 4000</option>
-            <option value="copywriting" data-amount="3000" data-name="Copywriting" data-description="Become a skilled copywriter and create compelling content.">Copywriting - Ksh 3000</option>
+            {% for course in courses %}
+                <option value="{{ course.id }}" data-amount="{{ course.price }}" data-name="{{ course.name }}" data-description="{{ course.description }}">
+                    {{ course.name }} - Ksh {{ course.price }}
+                </option>
+            {% endfor %}
         </select>
     </div>
 
@@ -25,13 +27,15 @@
     </div>
 
     <!-- Payment Form -->
-    <form id="paymentForm">
+    <form id="paymentForm" method="POST" action="{% url 'course_payment' %}">
+        {% csrf_token %}
         <div class="mb-3">
             <label for="amount" class="form-label">Amount (Ksh)</label>
+            <input type="hidden" name="course_id" id="hiddenCourseId" value="">
             <input type="text" class="form-control" id="amount" value="0" readonly>
         </div>
 
-        <button type="submit" class="btn btn-primary">Proceed to Mpesa</button>
+        <button type="submit" class="btn btn-primary">Proceed to Payment</button>
     </form>
 </div>
 
@@ -42,21 +46,44 @@
         var courseName = selectedCourse.getAttribute('data-name');
         var courseDescription = selectedCourse.getAttribute('data-description');
         var courseAmount = selectedCourse.getAttribute('data-amount');
+        var courseId = selectedCourse.value;
 
         // Update the course details
         document.getElementById('courseName').innerText = courseName;
         document.getElementById('courseDescription').innerText = courseDescription;
         document.getElementById('coursePrice').innerText = 'Price: Ksh ' + courseAmount;
 
-        // Set the amount in the payment form
+        // Set the amount and course_id in the payment form
         document.getElementById('amount').value = courseAmount;
+        document.getElementById('hiddenCourseId').value = courseId;
     });
 
     // Handle payment form submission
     document.getElementById('paymentForm').addEventListener('submit', function(e) {
         e.preventDefault();
-        // Here you can handle the M-Pesa payment logic
-        alert('Payment submitted for ' + document.getElementById('amount').value + ' Ksh.');
+        var form = this;
+        var formData = new FormData(form);
+
+        fetch(form.action, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': formData.get('csrfmiddlewaretoken'),
+            },
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if(data.status === 'success') {
+                alert(data.message);
+                window.location.href = data.redirect_url;  // Redirect to start study page
+            } else {
+                alert(data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while processing your payment.');
+        });
     });
 </script>
 

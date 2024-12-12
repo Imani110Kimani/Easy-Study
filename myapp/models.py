@@ -40,4 +40,20 @@ class Trainer(models.Model):
     def __str__(self):
         return self.name
 
+class Enrollment(models.Model):
+    PAYMENT_STATUS_CHOICES = [
+        ('Pending', 'Pending'),
+        ('Completed', 'Completed'),
+        ('Failed', 'Failed'),
+    ]
 
+    student = models.ForeignKey(Students, on_delete=models.CASCADE, related_name='enrollments')
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='enrollments')
+    payment_status = models.CharField(max_length=10, choices=PAYMENT_STATUS_CHOICES, default='Pending')
+    payment_date = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        unique_together = ('student', 'course')  # Prevent duplicate enrollments
+
+    def __str__(self):
+        return f"{self.user.username} - {self.course.name} - {self.payment_status}"

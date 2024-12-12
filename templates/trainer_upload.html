@@ -1,4 +1,4 @@
-{% extends 'starter-page.html' %}
+{% extends 'admin-starterpage.html' %}
 {% load static %}
 {% block body %}
 
@@ -105,7 +105,7 @@
 
         <div class="d-flex justify-content-between mt-4">
             <button type="submit" class="btn btn-primary">Upload</button>
-            <a href="{% url 'trainers' %}" class="btn btn-warning">Display Trainers</a>
+            <a href="{% url 'show_image' %}" class="btn btn-warning">Display Trainers</a>
         </div>
     </form>
 </div>

@@ -1,6 +1,8 @@
+from datetime import timezone
+
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from myapp.models import Students, Contact, Course, Trainer
+from myapp.models import Students, Contact, Course, Trainer, Enrollment
 from django.http import JsonResponse
 from myapp.forms import ContactForm, TrainerForm
 
@@ -77,7 +79,7 @@ def upload_trainer(request):
         form = TrainerForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('show_image')
+            return redirect('upload_trainer')
     else:
         form = TrainerForm()
     return render(request, 'trainer_upload.html', {'form': form})
@@ -117,13 +119,56 @@ def pay(request):
     courses = Course.objects.all()
     return render(request, 'payment-form.html', {'courses': courses})
 
-def process_payment(request):
+
+
+def course_payment(request):
     if request.method == 'POST':
         course_id = request.POST.get('course_id')
         course = get_object_or_404(Course, id=course_id)
-        # Add M-Pesa integration logic here
-        return JsonResponse({'status': 'success', 'message': f'Payment for {course.name} submitted successfully!'})
-    return JsonResponse({'status': 'error', 'message': 'Invalid request'}, status=400)
+
+        # Check if the user is already enrolled in the course
+        enrollment, created = Enrollment.objects.get_or_create(user=request.user, course=course)
+
+        if not created:
+            if enrollment.payment_status == 'Completed':
+                return JsonResponse({'status': 'error', 'message': 'You are already enrolled in this course.'},
+                                    status=400)
+            else:
+                # If previously failed or pending, update the payment status
+                enrollment.payment_status = 'Pending'
+                enrollment.payment_date = None
+                enrollment.save()
+        else:
+            # New enrollment
+            enrollment.payment_status = 'Pending'
+            enrollment.save()
+
+        # Here, you would normally integrate with a payment gateway.
+        # Since we're assuming payment is handled, we'll simulate a successful payment.
+        # Update the payment status to 'Completed'
+        enrollment.payment_status = 'Completed'
+        enrollment.payment_date = timezone.now()
+        enrollment.save()
+
+        return JsonResponse({
+            'status': 'success',
+            'message': f'Payment for {course.name} submitted successfully!',
+            'redirect_url': '/start-study/'  # Redirect to study page or dashboard
+        })
+
+    # For GET request, render the payment page
+    courses = Course.objects.all()
+    return render(request, 'payment-form.html', {'courses': courses})
+
+def start_study(request):
+    # Retrieve all courses the user is enrolled in with completed payments
+    enrollments = Enrollment.objects.filter(user=request.user, payment_status='Completed').select_related('course')
+    courses = [enrollment.course for enrollment in enrollments]
+    return render(request, 'start_study.html', {'courses': courses})
+
+def dashboard_view(request):
+    students = Students.objects.all()  # Fetch all student records
+    return render(request, 'admin-dashboard.html', {'students': students})
 
 def show_contacts(request):
     allcontacts = Contact.objects.all()
@@ -148,7 +193,6 @@ def update_contact(request,id):
        return render(request,'edit_contacts.html')
 
 
-
-
-
-
+def admin_dashboard(request):
+    contacts = Contact.objects.all()  # Fetch your contacts from the database
+    return render(request, 'admin-dashboard.html', {'contacts': contacts})
